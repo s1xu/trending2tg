@@ -38,6 +38,9 @@ func scrapeLanguageData(lang string) ([]model.Message, error) {
 		link, _ := s.Find(".lh-condensed a").Attr("href")
 		link = "https://github.com" + link
 
+		if lang == "" {
+			lang = "all"
+		}
 		results = append(results, model.Message{
 			Title:       title,
 			Language:    lang,
