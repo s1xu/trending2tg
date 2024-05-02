@@ -23,8 +23,8 @@ jobs:
     
     - name: Run
       env:
-        BotToken: ${{ secrets.BOT_TOKEN }}
-        ChatID: ${{ secrets.CHAT_ID }}
-        TranslateURL: ${{ secrets.TRANSLATE_URL }}
-        Languages: ${{ secrets.LANGUAGES }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        TRANSLATE_URL: ${{ secrets.TRANSLATE_URL }}
+        LANGUAGES: ${{ secrets.LANGUAGES }}
       run: ./trending2tg

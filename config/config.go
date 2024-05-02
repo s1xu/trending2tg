@@ -22,6 +22,6 @@ func init() {
 	BotToken = os.Getenv("BOT_TOKEN")
 	ChatID = os.Getenv("CHAT_ID")
 	TranslateURL = os.Getenv("TRANSLATE_URL")
-	language := os.Getenv("LANGUAGE")
+	language := os.Getenv("LANGUAGES")
 	Languages = strings.Split(language, ",")
 }
