@@ -3,6 +3,7 @@ package helper
 import (
 	"fmt"
 	"log"
+	"strings"
 	"trending2telbot/config"
 	"trending2telbot/model"
 
@@ -37,7 +38,9 @@ func scrapeLanguageData(lang string) ([]model.Message, error) {
 		description := CleanText(s.Find("p.col-9").Text())
 		link, _ := s.Find(".lh-condensed a").Attr("href")
 		link = "https://github.com" + link
-
+		todayStars := CleanText(s.Find(".d-inline-block.float-sm-right").Text())
+		todayStars = strings.Split(todayStars, " ")[0]
+		fmt.Printf("todayStars: %s\n", todayStars)
 		if lang == "" {
 			lang = "all"
 		}
@@ -46,6 +49,7 @@ func scrapeLanguageData(lang string) ([]model.Message, error) {
 			Language:    lang,
 			Description: description,
 			URL:         link,
+			TodayStars:  todayStars,
 		})
 	})
 	return results, nil

@@ -5,4 +5,5 @@ type Message struct {
 	Language    string
 	Description string
 	URL         string
+	TodayStars  string
 }
