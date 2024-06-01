@@ -31,11 +31,13 @@ jobs:
 
     - name: Add trends.db to tracking
       run: |
+        echo "Checking for trends.db..."
         if [ -f trends.db ]; then
+          echo "trends.db exists. File details:"
+          ls -lh trends.db
           git add trends.db
         else
-          echo "No trends.db file to add"
-        fi
+          echo "No trends.db file to add."
 
     - name: Check for changes
       id: git-status
