@@ -16,12 +16,11 @@ func SendMessage2Telegram(message string) {
 	}.Encode()
 
 	fullURL := fmt.Sprintf("%s?%s", apiURL, queryParams)
-	log.Println(fullURL)
+	// log.Println(fullURL)
 	resp, err := config.Client.Get(fullURL)
 	if err != nil {
 		log.Println("Error sending message to Telegram:", err)
 		return
 	}
 	defer resp.Body.Close()
-	log.Println("Message sent to Telegram successfully")
 }

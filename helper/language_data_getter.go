@@ -4,19 +4,33 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 	"trending2telbot/config"
 	"trending2telbot/model"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
-func GetLanguageData(lang string) []model.Message {
-	results, err := scrapeLanguageData(lang)
-	if err != nil {
-		log.Printf("Error getting language data for %s: %v", lang, err)
-		return nil
+func GetLanguageData(lang string) ([]model.Message, error) {
+	var results []model.Message
+	var err error
+
+	// Retry a maximum of three times
+	maxRetries := 3
+	// Retry latency
+	retryInterval := time.Second * 2
+
+	for attempt := 1; attempt <= maxRetries; attempt++ {
+		results, err = scrapeLanguageData(lang)
+		if err == nil {
+			return results, nil
+		}
+
+		log.Printf("Attempt %d: Error getting language data for %s: %v", attempt, lang, err)
+		time.Sleep(retryInterval)
 	}
-	return results
+
+	return nil, fmt.Errorf("after %d attempts, last error: %w", maxRetries, err)
 }
 
 func scrapeLanguageData(lang string) ([]model.Message, error) {
@@ -40,7 +54,6 @@ func scrapeLanguageData(lang string) ([]model.Message, error) {
 		link = "https://github.com" + link
 		todayStars := CleanText(s.Find(".d-inline-block.float-sm-right").Text())
 		todayStars = strings.Split(todayStars, " ")[0]
-		fmt.Printf("todayStars: %s\n", todayStars)
 		if lang == "" {
 			lang = "all"
 		}
@@ -52,5 +65,6 @@ func scrapeLanguageData(lang string) ([]model.Message, error) {
 			TodayStars:  todayStars,
 		})
 	})
+	log.Printf("Scraped %d results for language: %s", len(results), lang)
 	return results, nil
 }
