@@ -18,8 +18,8 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
 
-    - name: Build
-      run: go build -v -o trending2tg
+    # - name: Build
+    #   run: go build -v -o trending2tg
 
     - name: Run
       env:
@@ -27,7 +27,7 @@ jobs:
         CHAT_ID: ${{ secrets.CHAT_ID }}
         TRANSLATE_URL: ${{ secrets.TRANSLATE_URL }}
         LANGUAGES: ${{ secrets.LANGUAGES }}
-      run: ./trending2tg
+      run: go run .
 
     - name: Add trends.db to tracking and check file size
       run: |
