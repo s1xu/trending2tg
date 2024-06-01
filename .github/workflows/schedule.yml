@@ -53,6 +53,7 @@ jobs:
         echo start push
         git config --global user.name "s1xu"
         git config --global user.email "s1xu@foxmail.com"
+        git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
         git add -A
         git commit -m "$(date '+%Y-%m-%d')"
         git push
