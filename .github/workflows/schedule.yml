@@ -36,6 +36,7 @@ jobs:
           echo "trends.db exists. File details:"
           ls -lh trends.db
           git add trends.db
+          git status --short
         else
           echo "No trends.db file to add."
         fi 
