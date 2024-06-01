@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build
-      run: go build -v -o trending2tg
+      run: go build .
 
     - name: Run
       env:
@@ -57,5 +57,5 @@ jobs:
         git config --global user.email "s1xu@foxmail.com"
         git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
         git add -A
-        git commit -m "$(date '+%Y-%m-%d')"
+        git commit -m "upd: $(date '+%Y-%m-%d') trending"
         git push
