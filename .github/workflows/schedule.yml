@@ -29,6 +29,14 @@ jobs:
         LANGUAGES: ${{ secrets.LANGUAGES }}
       run: ./trending2tg
 
+    - name: Add trends.db to tracking
+      run: |
+        if [ -f trends.db ]; then
+          git add trends.db
+        else
+          echo "No trends.db file to add"
+        fi
+
     - name: Check for changes
       id: git-status
       run: |
