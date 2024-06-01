@@ -12,8 +12,6 @@ import (
 )
 
 func main() {
-	startTime := time.Now()
-
 	log.Println("Starting the application...")
 	if len(config.Languages) == 0 {
 		log.Fatalf("No languages configured. Exiting.")
@@ -50,8 +48,7 @@ func main() {
 
 	wg.Wait()
 
-	elapsed := time.Since(startTime)
-	sendSummary(messageCounts, elapsed)
+	sendSummary(messageCounts)
 
 	log.Println("Application finished.")
 }
@@ -108,15 +105,16 @@ func sendMessages(messagesChan chan model.Message, messageCounts map[string]int)
 	}
 }
 
-func sendSummary(messageCounts map[string]int, elapsed time.Duration) {
+func sendSummary(messageCounts map[string]int) {
 	currentDate := time.Now().Format("2006-01-02")
 	summaryMessage := fmt.Sprintf("Today's List Updated: %s 🎉\n", currentDate)
 
 	for lang, count := range messageCounts {
+		if lang == "" {
+			lang = "all"
+		}
 		summaryMessage += fmt.Sprintf("> #%s: %d News\n", lang, count)
 	}
 
-	elapsedInSeconds := int(elapsed.Seconds())
-	summaryMessage += fmt.Sprintf("Time Elapsed: %ds 🚀", elapsedInSeconds)
 	helper.SendMessage2Telegram(summaryMessage)
 }
